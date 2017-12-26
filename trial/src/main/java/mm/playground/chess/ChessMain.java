@@ -6,6 +6,37 @@ public class ChessMain {
         char[][] board = createChessBoard();
         placePawns(board);
         printBoard(board);
+        int startingRow = 1;
+        int startingColumn = 2;
+        if (movePawn(board, startingRow, startingColumn, PawnMoves.MOVE1)) {
+            System.out.println("Pawn in (" + startingRow + "," + startingColumn + ") moved!");
+        } else {
+            System.out.println("Cannot perform move for pawn in (" + startingRow + "," + startingColumn + ")!");
+        }
+        printBoard(board);
+    }
+
+    private static boolean movePawn(char[][] board, int startingRow, int startingColumn, PawnMoves move) {
+        if (!isPawnPresent(board, startingRow, startingColumn)) {
+            return false;
+        }
+        PawnMoves.makeMove(board, startingRow, startingColumn, move);
+        return true;
+    }
+
+    public static void performMove(char[][] board, int startRow, int startColumn, int finalRow, int finalColumn) {
+        char piece = board[startRow][startColumn];
+        board[startRow][startColumn] = ' ';
+        board[finalRow][finalColumn] = piece;
+    }
+
+
+    private static boolean isPawnPresent(char[][] board, int rowIndex, int columnIndex) {
+        if (board[rowIndex][columnIndex] == 'P') {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private static void placePawns(char[][] board) {
